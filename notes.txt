@@ -1,0 +1,8 @@
+1- create database on workbench - DONE
+2- test your server - DONE
+
+3- work on the routs (controllers)
+4- views
+5- test your routs
+6- connecting the data to the views 
+7- front-end functionality
