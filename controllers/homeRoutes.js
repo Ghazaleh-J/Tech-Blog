@@ -2,90 +2,117 @@ const router = require('express').Router();
 const {User, Post, Comment} = require('../models');
 // const withAuth = require('../utils/auth');
 
+// Get all posts for homepage
 router.get('/', async(req, res) => {
    try{
-    // Get all posts and JOIN with user data
+
+    // we need to get all Posts and include the User for each 
     const postData = await Post.findAll({
-        include: [User, Comment]
-    })
+      attributes: { exclude: ['user_id', 'updatedAt'] },
+      include: [
+        { model: User, attributes: { exclude: ['password', 'createdAt'] }},
+        { model: Comment },
+      ],
+    });
+
     // Serialize data so the template can read it
     const posts = postData.map(post => post.get({plain: true}));
-    // Pass serialized data and session flag into template
-    res.render('homepage', {posts, logged_in: req.session.logged_in });
+
+    // Pass serialized data and session flag into template to render all othe posts
+    res.render('homepage', {payload: {posts, logged_in: req.session.logged_in }});
    } catch (err) {
     res.status(500).json(err);
    }
 });
 
 
+// get single post
 router.get('/post/:id', async (req, res) => {
     try {
       const postData = await Post.findByPk(req.params.id, {
+        attributes: {
+          exclude: ['user_id', 'updatedAt'] 
+        },
+  
         include: [
-          {
-            model: User,
-            attributes: ['name'],
+          { 
+            model: User, 
+            attributes: { 
+              exclude: ['password', 'createdAt'] 
+            }
+          },
+          { 
+            model: Comment, 
+            include: {
+              model: User,
+              attributes: { exclude: ['password'] }
+            }
           },
         ],
       });
-  
+
+      if(postData){
+
+         // serialize the data
       const post = postData.get({ plain: true });
-  
-      res.render('post', {
-        ...post,
-        logged_in: req.session.logged_in
+      res.render('single-post', { 
+        payload: { posts: [post], logged_in: req.session.logged_in }
       });
-    } catch (err) {
-      res.status(500).json(err);
+    } else {
+      res.status(404).end();
     }
-  });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
 
-  // Use withAuth middleware to prevent access to route
-router.get('/profile', async (req, res) => {
-    try {
-      // Find the logged in user based on the session ID
-      const userData = await User.findByPk(req.session.user_id, {
-        attributes: { exclude: ['password'] },
-        include: [{ model: post}],
-      });
-  
-      const user = userData.get({ plain: true });
-  
-      res.render('profile', {
-        ...user,
-        logged_in: true
-      });
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  });
-
-
+// login route
 router.get('/login', (req, res) => {
-    // If the user is already logged in, redirect the request to another route
-    if (req.session.logged_in) {
-        res.redirect('/profile');
-        return;
-      }
+  // If the user is already logged in, redirect the request to another route
+  if (req.session.logged_in) {
+      res.redirect('/');
+      return;
+    }
 
-    res.render('login');
+  res.render('login');
 });
 
-
-
-
-
-
-
+// sign up route
 router.get('/signup', (req, res) => {
-    res.render('signup');
+  if (req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
+  res.render('signup');
 });
-// findbypk
-router.get('/singlepost', (req, res) => {
-    res.render('singlepost');
-});
-
 
 
 
 module.exports = router
+      
+  
+      
+
+
+//   // Use withAuth middleware to prevent access to route
+// router.get('/profile', async (req, res) => {
+//     try {
+//       // Find the logged in user based on the session ID
+//       const userData = await User.findByPk(req.session.user_id, {
+//         attributes: { exclude: ['password'] },
+//         include: [{ model: post}],
+//       });
+  
+//       const user = userData.get({ plain: true });
+  
+//       res.render('profile', {
+//         ...user,
+//         logged_in: true
+//       });
+//     } catch (err) {
+//       res.status(500).json(err);
+//     }
+//   });
+
+
