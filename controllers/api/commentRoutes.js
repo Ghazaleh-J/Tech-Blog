@@ -1,13 +1,17 @@
 // Import
 const router = require('express').Router();
 const { Comment} = require('../../models');
-
+const withAuth = require('../../utils/auth');
 
 
 // POST CREATE
-router.post('/', async (req, res) => {
+router.post('/', withAuth, async (req, res) => {
     try {
-        const newComment = await Comment.create(req.body);
+        const newComment = await Comment.create({
+            ...req.body,
+            post_id: req.body.post_id,
+            user_id: req.session.user_id,
+        });
         res.status(200).json(newComment);
     } catch (err) {
         res.status(400).json('Something went wrong', err);
@@ -33,7 +37,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE DESTORY
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', withAuth, async (req, res) => {
     try {
         const delComment = await Comment.destroy({
             where: {
