@@ -3,18 +3,50 @@ const { User } = require('../../models');
 
 router.post('/', async (req, res) => {
   try {
-    const userData = await User.create(req.body);
+    const existingUser = await User.findOne({
+      where: {
+        username: req.body.username
+      }
+    });
+
+    if (existingUser) {
+      console.log('this username is already taken');
+      res.status(500).json({ message: 'username already taken' });
+      return;
+    }
+
+    const newUser = await User.create({
+      username: req.body.username,
+      password: req.body.password,
+    });
 
     req.session.save(() => {
-      req.session.user_id = userData.id;
+      req.session.user_id = newUser.id;
+      req.session.username = newUser.username;
       req.session.logged_in = true;
 
-      res.status(200).json(userData);
+      res.json(newUser);
     });
   } catch (err) {
-    res.status(400).json(err);
+    console.log(err);
+    res.status(500).json({ message: 'Invalid entries or server error' });
   }
 });
+
+// router.post('/', async (req, res) => {
+//   try {
+//     const userData = await User.create(req.body);
+
+//     req.session.save(() => {
+//       req.session.user_id = userData.id;
+//       req.session.logged_in = true;
+
+//       res.status(200).json(userData);
+//     });
+//   } catch (err) {
+//     res.status(400).json(err);
+//   }
+// });
 
 router.post('/login', async (req, res) => {
   try {

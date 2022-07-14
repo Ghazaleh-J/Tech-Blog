@@ -12,7 +12,7 @@ router.get('/', withAuth, async (req, res) => {
         { model: Comment },
       ],
       where: {
-        user_id: req.session.userId,
+        user_id: req.session.user_id,
       }
     });
         const posts = postData.map((post) => post.get({ plain: true }));
