@@ -1,8 +1,11 @@
+//Import sequelize library/package
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
+//Defines 'Comment' as a model
 class Comment extends Model{}
 
+//Initialize Comment Model
 Comment.init(
   {
     id: {
@@ -13,12 +16,13 @@ Comment.init(
     },
     content: {
         type: DataTypes.TEXT,
+        allowNull: false,
     },
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'User',
+        model: 'user',
         key: 'id'
       }
     },
@@ -26,7 +30,7 @@ Comment.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Post',
+        model: 'post',
         key: 'id'
       }
     } 

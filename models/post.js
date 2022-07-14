@@ -1,8 +1,11 @@
+//Import sequelize library/package
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
+//Defines 'Post' as a model
 class Post extends Model{}
 
+//Initialize Post Model
 Post.init(
   {
     id: {
@@ -13,6 +16,7 @@ Post.init(
     },
     title: {
         type: DataTypes.STRING,
+        allowNull: false,
     },
     content: {
         type: DataTypes.TEXT,
@@ -22,7 +26,7 @@ Post.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'User',
+        model: 'user',
         key: 'id'
       }
     }
