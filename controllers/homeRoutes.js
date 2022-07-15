@@ -55,6 +55,7 @@ router.get('/post/:id', async (req, res) => {
 
          // serialize the data
       const post = postData.get({ plain: true });
+      console.log('status', req.session.logged_in)
       res.render('single-post', { 
         payload: { posts: [post], logged_in: req.session.logged_in }
       });
