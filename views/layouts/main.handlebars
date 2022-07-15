@@ -15,7 +15,7 @@
     <ul>
       <li class="li-inline nav-item"><a href="/">Home</a></li>
       <li class="li-inline nav-item"><a href="/dashboard">Dashboard</a></li>
-      {{#if payload.session.logged_in}}
+      {{#if payload.logged_in}}
         <li class="li-inline nav-item"><a href="#" id="logout-link">Logout</a></li>
       {{else}}
         <li class="li-inline nav-item"><a href="/login">Login</a></li>
