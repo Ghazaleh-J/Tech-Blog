@@ -17,8 +17,8 @@
             <p>{{content}}<p>
         </div>
         <p>Comments: {{comments.length}}</p>
-        {{#if (payload.logged_in)}}
+        {{!-- {{#if (isLocalUser user.id)}} --}}
             <a class="edit-btn" href="/dashboard/edit/{{id}}">Edit</a>
-        {{/if}}
+        {{!-- {{/if}} --}}
     </div>
 {{/each}}
