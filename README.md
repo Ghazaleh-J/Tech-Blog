@@ -23,7 +23,7 @@ Writing about tech can be just as important as making it. Developers spend plent
 * By clicking on the logout option in the navigation, you're signed out of the site
 * When the user idle on the site for more than a set time, they're able to view comments but they're prompted to log in again before they can add, update, or delete comments
 
-## Links
+## Link
 * [Heroku Deployed Page](https://tech-blogg-hw.herokuapp.com/)
 
 ## Site Preview
