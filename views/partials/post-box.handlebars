@@ -15,8 +15,8 @@
             <p>{{content}}<p>
         </div>
         <p>Comments: {{comments.length}}</p>
-        {{!-- {{#if (isLocalUser user.id)}} --}}
+        {{#if (isLocalUser currentUserId user.id)}}
             <a class="edit-btn" href="/dashboard/edit/{{id}}">Edit</a>
-        {{!-- {{/if}} --}}
+        {{/if}}
     </div>
 {{/each}}

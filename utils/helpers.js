@@ -6,17 +6,20 @@ module.exports = {
         date
         ).getFullYear()}`;
     },
-    isLocalUser: userId => {
-        const localUserId = globals.userId;
-        if (localUserId === null || localUserId === undefined) {
-            console.log('no local user id was defined');
-            return;
-        }
+    isLocalUser: (currentUserId, userId) => {
+        // console.log('The user Id', userId)
+        // const localUserId = globals.userId;
+        // if (localUserId === null || localUserId === undefined) {
+        //     console.log('no local user id was defined');
+        //     return;
+        // }
+        console.log("Is current user --- ", currentUserId, userId)
+        return currentUserId === userId
 
-        const isLocalUser = localUserId === userId;
+        // const isLocalUser = localUserId === userId;
 
-        console.log('is local user: ', isLocalUser);
-        return isLocalUser;
+        // console.log('is local user: ', isLocalUser);
+        // return isLocalUser;
     },
     print: data => console.log('from helper: ', data),
     setGlobalVar: (key, value) => {
