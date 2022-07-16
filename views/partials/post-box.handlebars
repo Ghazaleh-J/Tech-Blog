@@ -3,9 +3,7 @@
 {{setGlobalVar 'userId' payload.session.userId}}
 
 {{#each payload.posts}}
-    {{!-- {{getGlobalVar 'userId'}}
-    {{isUser user.id (getGlobalVar 'userId')}} --}}
-
+   
     <div class="post-box">
         <a href="/post/{{id}}">
             <div class="heading-box">
