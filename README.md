@@ -1,11 +1,9 @@
 # Tech_Blog_MVC-14
 
 ## Description
-
 Writing about tech can be just as important as making it. Developers spend plenty of time creating new applications and debugging existing codebases, but most developers also spend at least some of their time reading and writing about technical concepts, recent advancements, and new technologies. A simple Google search for any concept covered in this course returns thousands of think pieces and tutorials from developers of all skill levels! This is a CMS-style blog site similar to a Wordpress site, where developers can publish their blog posts and comment on other developers’ posts as well. It follows the MVC paradigm in its architectural structure, using Handlebars.js as the templating language, Sequelize as the ORM, and the express-session npm package for authentication.
 
 ## Criteria
-
 * By visiting the site for the first time, you're presented with the homepage, which includes existing blog posts if any have been posted, navigation links for the homepage and the dashboard, and the option to log in
 * By clicking on the homepage option, you're taken to the homepage
 * By clicking on any other links in the navigation, you're prompted to either sign up or sign in
@@ -23,8 +21,33 @@ Writing about tech can be just as important as making it. Developers spend plent
 * By clicking on the logout option in the navigation, you're signed out of the site
 * When the user idle on the site for more than a set time, they're able to view comments but they're prompted to log in again before they can add, update, or delete comments
 
+## Installation
+* Copy the repository to your system
+* Create .env file
+  - SET DB_NAME to 'tech_blog'
+  - SET DB_USER to 'YOUR-MYSQL-USERNAME'
+  - SET DB_PASSWORD to 'YOUR-MYSQL-PASSWORD'
+* npm install
+* Load schema.sql via MySQL command line:
+  - source schema.sql
+* npm run seed
+* node server.js
+
+## Technologies
+* MySQL
+* Sequelize
+* dotenv
+* Handlebars
+
+## Usage
+* Create a User
+* Login
+* Browse Posts
+* Add Comments to Posts
+* Create, Edit, Delete your own Posts
+
 ## Link
 * [Heroku Deployed Page](https://tech-blogg-hw.herokuapp.com/)
 
-## Site Preview
+## Application Preview
 ![alt text](./utils/tach-blog.png)
